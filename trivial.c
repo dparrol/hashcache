@@ -24,15 +24,15 @@ void cacheFree(cache_t cache) {
 }
 
 void cacheInsert(cache_t cache, key_t key, payload_t payload) {
-    int i = hash(key) % CACHE_SIZE; // Get position in cache
-    free(cache[i].key);             // Evict anything already there
+    int i = hash32(key) % CACHE_SIZE; // Get position in cache
+    free(cache[i].key);               // Evict anything already there
     free(cache[i].value);
-    cache[i].key = key;             // Put new payload in place
+    cache[i].key = key;               // Put new payload in place
     cache[i].value = payload;
 }
 
 payload_t cacheGet(cache_t cache, key_t key) {
-    int i = hash(key) % CACHE_SIZE;
+    int i = hash32(key) % CACHE_SIZE;
     if (cache[i].key && keys_equal(cache[i].key, key)) {
         return cache[i].value;  // We found the key! :-D
     } 

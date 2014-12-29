@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
+#include "hash.h"
 #include "api.h"
 
 cache_t cache;
@@ -21,6 +22,7 @@ static void handleToken(char *token) {
 
 int main(void) {
     cache = cacheCreate();
+    randomHashKey();
 
     char c, buffer[1024], *buf = buffer;
     while ((c = getchar()) != EOF) {
@@ -34,9 +36,7 @@ int main(void) {
         }
     }
 
-    printf("Hits: %i, Misses: %i\n", hits, misses);
-    printf("Hit rate: %0.3f%%\n", (double)hits / (hits + misses));
-
+    printf("%i %i %f\n", hits, misses, (double)hits / (hits + misses));
     cacheFree(cache);
     return 0;
 }
